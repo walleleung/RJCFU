@@ -1,4 +1,45 @@
-<!-- NG-ZORRO -->
-<a href="https://github.com/NG-ZORRO/ng-zorro-antd" target="_blank" style="display: flex;align-items: center;justify-content: center;height: 100%;width: 100%;">
-  <img height="300" src="https://img.alicdn.com/tfs/TB1NvvIwTtYBeNjy1XdXXXXyVXa-89-131.svg">
-</a>
+<nz-layout class="layout">
+  <nz-header class="header">
+    <div class="logo">
+      <button nz-button nzShape="circle">
+        <i nz-icon type="twitter"></i>
+      </button>
+    </div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;" [nzSelectable]="false">
+      <li nz-menu-item *ngFor="let i of menuItems" [routerLink]="i.path" [nzSelected]="isCurrentMenu(i)">
+        <i nz-icon type="{{i.iconName}}"></i> {{i.menuName}}
+      </li>
+    </ul>
+    <span class="white-space"></span>
+
+    <nz-dropdown class="research">
+      <a nz-dropdown>当前课题</a>
+      <ul nz-menu>
+        <li nz-menu-item>xxxxx</li>
+      </ul>
+    </nz-dropdown>
+
+    <nz-dropdown [nzPlacement]="'bottomRight'">
+      <button nz-button nzType="primary" nzShape="circle" nz-dropdown>
+        <i nz-icon type="user"></i>
+      </button>
+      <ul nz-menu>
+        <li nz-menu-item>
+          <i nz-icon type="setting"></i> 个人设置
+        </li>
+        <li nz-menu-divider></li>
+        <li nz-menu-item (click)="logout()">
+          <i nz-icon type="close"></i> 退出系统
+        </li>
+      </ul>
+    </nz-dropdown>
+  </nz-header>
+  <nz-layout>
+    <router-outlet></router-outlet>
+  </nz-layout>
+</nz-layout>
+
+<nz-modal nzTitle="确认退出" nzOkText="确定" nzCancelText="取消" (nzOnOk)="handleLogout()" [nzVisible]="confirmQuitDlgVisible"
+          (nzOnCancel)="handleCancel()">
+  <nz-alert nzType="error" nzMessage="确认退出系统？未保存的数据将丢失。"></nz-alert>
+</nz-modal>
