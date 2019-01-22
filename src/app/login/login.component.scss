@@ -1,0 +1,43 @@
+.background-color {
+  width: 100vw;
+  height: 100vh;
+}
+
+.panel1 {
+  @extend .background-color;
+  background-color: antiquewhite;
+}
+
+.panel2 {
+  @extend .background-color;
+  background-color: burlywood;
+}
+
+.panel3 {
+  @extend .background-color;
+  background-color: indianred;
+}
+
+.panel4 {
+  @extend .background-color;
+  background-color: wheat;
+}
+
+.login-form {
+  max-width: 25em;
+  position: fixed;
+  right: 4em;
+  top: 6em;
+  background-color: #f0f2f5;
+  border: 1px solid #bbb;
+  border-radius: 1em;
+  padding: 2em;
+
+  .forget-password {
+    float: right;
+  }
+
+  .login-btn {
+    width: 100%;
+  }
+}

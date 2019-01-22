@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem} from '../model/menu-item';
+import {MenuItemModel} from '../model/menu.item.model';
 import {SystemService} from '../service/system.service';
 import {Router} from '@angular/router';
 
@@ -11,12 +11,12 @@ import {Router} from '@angular/router';
 export class HomeComponent implements OnInit {
   confirmQuitDlgVisible: boolean;
 
-  menuItems: Array<MenuItem>;
+  menuItems: Array<MenuItemModel>;
 
   constructor(private _systemService: SystemService,
               private _router: Router) {
     this.confirmQuitDlgVisible = false;
-    this.menuItems = new Array<MenuItem>();
+    this.menuItems = new Array<MenuItemModel>();
   }
 
   ngOnInit() {
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     this.confirmQuitDlgVisible = true;
   }
 
-  isCurrentMenu(i: MenuItem): boolean {
+  isCurrentMenu(i: MenuItemModel): boolean {
     let path = this._router.url;
     if (path === '/') {
       path = '';
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.confirmQuitDlgVisible = false;
   }
 
-  navTo(i: MenuItem) {
+  navTo(i: MenuItemModel) {
     this._router.navigate([i.path]).catch(e => {
       console.error(e);
     });

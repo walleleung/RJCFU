@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem} from '../model/menu-item';
+import {MenuItemModel} from '../model/menu.item.model';
 import {SystemService} from '../service/system.service';
 
 @Component({
@@ -8,7 +8,7 @@ import {SystemService} from '../service/system.service';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  menuItems: Array<MenuItem>;
+  menuItems: Array<MenuItemModel>;
 
   loading: boolean;
   drawerVisible: boolean;

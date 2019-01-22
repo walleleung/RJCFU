@@ -1,12 +1,60 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+<nz-carousel [nzAutoPlay]="true" nzEffect="fade" nzDots="false" [nzAutoPlaySpeed]="10000">
+  <div nz-carousel-content *ngFor="let i of backgroundPanels">
+    <div [ngClass]="'panel'+i"></div>
+  </div>
+</nz-carousel>
+
+
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="login-form">
   <nz-form-item>
     <nz-form-control>
-      <nz-input-group>
-        <input nz-input formControlName="username" placeholder="用户名/电话号码/工号">
-        <nz-form-explain *ngIf="validateForm.get('username').dirty&&validateForm.get('username').errors">
-          必须输入该项
-        </nz-form-explain>
+      <nz-input-group [nzPrefix]="prefixUser">
+        <input nz-input formControlName="username" placeholder="用户名/电话号码/工号" [(ngModel)]="loginUser.username">
       </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('username').dirty&&validateForm.get('username').errors">
+        必须输入该项
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group [nzPrefix]="prefixLock">
+        <input type="password" formControlName="password" nz-input placeholder="密码" [(ngModel)]="loginUser.password">
+      </nz-input-group>
+      <nz-form-explain
+        *ngIf="validateForm.get('password').dirty&&validateForm.get('password').errors">
+        必须输入该项
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group [nzPrefix]="prefixCaptcha">
+        <input nz-input formControlName="captcha" placeholder="验证码" [(ngModel)]="loginUser.captcha">
+      </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('captcha').dirty&&validateForm.get('captcha').errors">
+        必须输入该项
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="remember" [(ngModel)]="loginUser.rememberMe">
+        <span>记住登录状态</span>
+      </label>
+      <a class="forget-password">忘记密码</a>
+      <button nz-button nzType="primary" class="login-btn">登录</button>
+      <a>注册</a>
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<ng-template #prefixUser>
+  <i nz-icon type="user"></i>
+</ng-template>
+<ng-template #prefixLock>
+  <i nz-icon type="lock"></i>
+</ng-template>
+<ng-template #prefixCaptcha>
+  <i nz-icon type="loading-3-quarters" [spin]="isLoadingCaptcha"></i>
+</ng-template>

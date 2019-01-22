@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
-import {MenuItem} from '../model/menu-item';
+import {MenuItemModel} from '../model/menu.item.model';
 import {Observable, of} from 'rxjs';
-
+import {HttpClient} from '@angular/common/http';
+import {LoginModel} from '../model/login.model';
+import {UserTokenModel} from '../model/user.token.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SystemService {
-
-  private readonly menuItems: Array<MenuItem> = [
+  private readonly menuItems: Array<MenuItemModel> = [
     {menuName: '首页', iconName: 'home', path: ''},
     {menuName: '搜索', iconName: 'search', path: '/search'},
     {menuName: '患者管理', iconName: 'team', path: '/patient'},
@@ -19,10 +20,22 @@ export class SystemService {
     {menuName: '数据导出', iconName: 'export', path: '/export'}
   ];
 
-  constructor() {
+  constructor(private _httpClient: HttpClient) {
   }
 
-  getMenu(): Observable<Array<MenuItem>> {
+  login(loginUser: LoginModel): Observable<boolean> {
+    return this._httpClient.post<boolean>('', loginUser);
+  }
+
+  getUserStatus(): Observable<UserTokenModel> {
+    const localUserToken = localStorage.getItem('TOKEN');
+    if (localUserToken && localUserToken.length) {
+      return of<UserTokenModel>(JSON.parse(localUserToken));
+    }
+    return of(null);
+  }
+
+  getMenu(): Observable<Array<MenuItemModel>> {
     return of(this.menuItems);
   }
 }
