@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuItem} from './model/menu-item';
-import {SystemService} from './service/system.service';
-import {Router} from '@angular/router';
+import {Component, ComponentFactoryResolver, OnInit, Type, ViewChild} from '@angular/core';
+import {MainHostDirective} from './directive/main-host.directive';
+import {HomeComponent} from './home/home.component';
+import {LoginComponent} from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -9,38 +9,25 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  menuItems: Array<MenuItem>;
-  confirmQuitDlgVisible: boolean;
+  @ViewChild(MainHostDirective)
+  mainHost: MainHostDirective;
 
-  constructor(private _systemService: SystemService,
-              private _router: Router) {
-    this.menuItems = new Array<MenuItem>();
-    this.confirmQuitDlgVisible = false;
+  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnInit(): void {
-    this._systemService.getMenu().subscribe(p => {
-      this.menuItems = p;
-    });
-  }
-
-  logout() {
-    this.confirmQuitDlgVisible = true;
-  }
-
-  isCurrentMenu(i: MenuItem): boolean {
-    let path = this._router.url;
-    if (path === '/') {
-      path = '';
+    // check login status
+    if (true) {
+      this.loadComponent(HomeComponent);
+    } else {
+      this.loadComponent(LoginComponent);
     }
-    return i.path === path;
   }
 
-  handleLogout() {
-    // do sth.
-  }
-
-  handleCancel() {
-    this.confirmQuitDlgVisible = false;
+  private loadComponent(component: Type<any>) {
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(component);
+    const viewContainerRef = this.mainHost.viewContainerRef;
+    viewContainerRef.clear();
+    viewContainerRef.createComponent(componentFactory);
   }
 }

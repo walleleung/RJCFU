@@ -1,0 +1,12 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group>
+        <input nz-input formControlName="username" placeholder="用户名/电话号码/工号">
+        <nz-form-explain *ngIf="validateForm.get('username').dirty&&validateForm.get('username').errors">
+          必须输入该项
+        </nz-form-explain>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</form>

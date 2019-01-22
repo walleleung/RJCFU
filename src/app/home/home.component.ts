@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from '../model/menu-item';
 import {SystemService} from '../service/system.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,31 +9,50 @@ import {SystemService} from '../service/system.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  loading: boolean;
+  confirmQuitDlgVisible: boolean;
 
   menuItems: Array<MenuItem>;
 
-  drawerVisible: boolean;
-
-  constructor(private _systemService: SystemService) {
-    this.loading = true;
+  constructor(private _systemService: SystemService,
+              private _router: Router) {
+    this.confirmQuitDlgVisible = false;
     this.menuItems = new Array<MenuItem>();
-    this.drawerVisible = false;
   }
 
   ngOnInit() {
     this._systemService.getMenu()
       .subscribe(p => {
-        this.loading = false;
         this.menuItems = p;
       });
   }
 
-  open() {
-    this.drawerVisible = true;
+  logout() {
+    this.confirmQuitDlgVisible = true;
   }
 
-  close() {
-    this.drawerVisible = false;
+  isCurrentMenu(i: MenuItem): boolean {
+    let path = this._router.url;
+    if (path === '/') {
+      path = '';
+    }
+    return i.path === path;
+  }
+
+  handleLogout() {
+    // do sth.
+
+    this._router.navigate(['login']).catch(e => {
+      console.log(e);
+    });
+  }
+
+  handleCancel() {
+    this.confirmQuitDlgVisible = false;
+  }
+
+  navTo(i: MenuItem) {
+    this._router.navigate([i.path]).catch(e => {
+      console.error(e);
+    });
   }
 }

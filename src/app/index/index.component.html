@@ -1,0 +1,21 @@
+<nz-skeleton [nzActive]="true" [nzLoading]="loading">
+  <ng-container *ngFor="let i of menuItems;let j=index;">
+    <div nz-row *ngIf="j%4===0">
+      <ng-container *ngFor="let k of menuItems.slice(j,j+4)">
+        <div nz-col [nzSpan]="6" nz-tooltip nzTitle="{{k.tooltip}}">
+          <div class="wrapper" [routerLink]="k.path">
+            <i nz-icon type="{{k.iconName}}"></i>
+            <span>{{k.menuName}}</span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <nz-layout>
+    <nz-footer class="footer">
+      <button nz-button (click)="open()">
+        <i nz-icon type="bar-chart"></i>
+      </button>
+    </nz-footer>
+  </nz-layout>
+</nz-skeleton>

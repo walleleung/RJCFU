@@ -1,32 +1,22 @@
-.wrapper {
+.layout {
   display: flex;
   flex-direction: column;
-  border-radius: 50% 50%;
-  border: 1px solid #303030;
-  height: 8em;
-  width: 8em;
-  cursor: pointer;
-  margin: 4em auto;
-  padding: 1em 2em;
-  outline: none;
-
-  &:hover {
-    background-color: #303030;
-    color: #f0f2f5;
-  }
-
-  i {
-    font-size: 3em;
-  }
-
-  span {
-    margin: 1em auto;
-    white-space: nowrap;
-  }
 }
 
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+.logo {
+  margin: 0 1em;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  padding: 0 1em;
+}
+
+.white-space {
+  flex: 1 1 auto;
+}
+
+.research {
+  margin-right: 1em;
 }
