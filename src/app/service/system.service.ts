@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {MenuItemModel} from '../model/menu.item.model';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {LoginModel} from '../model/login.model';
 import {UserTokenModel} from '../model/user.token.model';
+import {ResearchModel} from '../model/research.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,30 @@ export class SystemService {
     {menuName: '数据导出', iconName: 'export', path: '/export'}
   ];
 
+  private userStatus = new Subject();
+
+  userStatusChange$ = this.userStatus.asObservable();
+
   constructor(private _httpClient: HttpClient) {
   }
 
   login(loginUser: LoginModel): Observable<boolean> {
-    return this._httpClient.post<boolean>('', loginUser);
+    const userToken = <UserTokenModel>{
+      userToken: 'aaa',
+      currentResearch: <ResearchModel>{
+        researchName: 'aaa',
+        researchId: 'aaa'
+      }
+    };
+    localStorage.setItem('TOKEN', JSON.stringify(userToken));
+    this.userStatus.next();
+    return of(true);
+  }
+
+  logout(): Observable<boolean> {
+    localStorage.clear();
+    this.userStatus.next();
+    return of(true);
   }
 
   getUserStatus(): Observable<UserTokenModel> {

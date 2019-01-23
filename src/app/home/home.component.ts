@@ -39,10 +39,10 @@ export class HomeComponent implements OnInit {
   }
 
   handleLogout() {
-    // do sth.
-
-    this._router.navigate(['login']).catch(e => {
-      console.log(e);
+    this._systemService.logout().subscribe(p => {
+      if (p) {
+        this.confirmQuitDlgVisible = false;
+      }
     });
   }
 

@@ -1,3 +1,13 @@
-<ul nz-menu nzMode="horizontal">
-  <li nz-menu-item>search</li>
-</ul>
+<nz-button-group>
+  <button nz-button (click)="design()">
+    <i nz-icon type="form"></i> 新增
+  </button>
+  <button nz-button>
+    <i nz-icon type="edit"></i> 编辑
+  </button>
+  <button nz-button>
+    <i nz-icon type="delete"></i> 删除
+  </button>
+</nz-button-group>
+
+<ng-template appHost></ng-template>

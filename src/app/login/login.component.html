@@ -1,17 +1,17 @@
-<nz-carousel [nzAutoPlay]="true" nzEffect="fade" nzDots="false" [nzAutoPlaySpeed]="10000">
+<nz-carousel [nzAutoPlay]="true" nzEffect="fade" nzDots="false" [nzAutoPlaySpeed]="10000" [nzEnableSwipe]="false">
   <div nz-carousel-content *ngFor="let i of backgroundPanels">
     <div [ngClass]="'panel'+i"></div>
   </div>
 </nz-carousel>
 
 
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="login-form">
+<form nz-form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="login-form">
   <nz-form-item>
     <nz-form-control>
       <nz-input-group [nzPrefix]="prefixUser">
-        <input nz-input formControlName="username" placeholder="用户名/电话号码/工号" [(ngModel)]="loginUser.username">
+        <input nz-input formControlName="username" placeholder="用户名/电话号码/工号">
       </nz-input-group>
-      <nz-form-explain *ngIf="validateForm.get('username').dirty&&validateForm.get('username').errors">
+      <nz-form-explain *ngIf="loginForm.get('username').dirty&&loginForm.get('username').errors">
         必须输入该项
       </nz-form-explain>
     </nz-form-control>
@@ -19,10 +19,10 @@
   <nz-form-item>
     <nz-form-control>
       <nz-input-group [nzPrefix]="prefixLock">
-        <input type="password" formControlName="password" nz-input placeholder="密码" [(ngModel)]="loginUser.password">
+        <input type="password" formControlName="password" nz-input placeholder="密码">
       </nz-input-group>
       <nz-form-explain
-        *ngIf="validateForm.get('password').dirty&&validateForm.get('password').errors">
+        *ngIf="loginForm.get('password').dirty&&loginForm.get('password').errors">
         必须输入该项
       </nz-form-explain>
     </nz-form-control>
@@ -30,16 +30,17 @@
   <nz-form-item>
     <nz-form-control>
       <nz-input-group [nzPrefix]="prefixCaptcha">
-        <input nz-input formControlName="captcha" placeholder="验证码" [(ngModel)]="loginUser.captcha">
+        <input nz-input formControlName="captcha" placeholder="验证码" nz-popover
+               nzTitle="验证码" [nzContent]="captchaPopover">
       </nz-input-group>
-      <nz-form-explain *ngIf="validateForm.get('captcha').dirty&&validateForm.get('captcha').errors">
+      <nz-form-explain *ngIf="loginForm.get('captcha').dirty&&loginForm.get('captcha').errors">
         必须输入该项
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-control>
-      <label nz-checkbox formControlName="remember" [(ngModel)]="loginUser.rememberMe">
+      <label nz-checkbox formControlName="remember">
         <span>记住登录状态</span>
       </label>
       <a class="forget-password">忘记密码</a>
@@ -57,4 +58,8 @@
 </ng-template>
 <ng-template #prefixCaptcha>
   <i nz-icon type="loading-3-quarters" [spin]="isLoadingCaptcha"></i>
+</ng-template>
+
+<ng-template #captchaPopover>
+  <img class="captcha" alt="验证码" src="">
 </ng-template>

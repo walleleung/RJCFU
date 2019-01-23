@@ -19,6 +19,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // check login status
+    this.refresh();
+    this._systemService.userStatusChange$.subscribe(() => {
+      this.refresh();
+    });
+  }
+
+  public refresh() {
     this._systemService.getUserStatus().subscribe(p => {
       if (p) {
         this.loadComponent(HomeComponent);

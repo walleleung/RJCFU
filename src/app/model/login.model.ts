@@ -2,5 +2,5 @@ export interface LoginModel {
   username: string;
   password: string;
   captcha: string;
-  rememberMe: boolean;
+  remember: boolean;
 }

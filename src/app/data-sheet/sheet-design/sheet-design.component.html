@@ -1,0 +1,65 @@
+<nz-button-group class="toolbar">
+  <button nz-button>
+    <i nz-icon type="save"></i> 保存
+  </button>
+  <button nz-button (click)="quitDesign()">
+    <i nz-icon type="poweroff"></i> 退出
+  </button>
+</nz-button-group>
+<nz-layout>
+  <nz-layout>
+    <nz-sider class="toolbox">
+      <ul nz-menu nzMode="inline">
+        <li nz-submenu>
+          <span title><i nz-icon type="shop"></i><span class="nav-text">容器</span></span>
+          <ul [ngxDroppable]="['tools']" [copy]="true">
+            <li nz-menu-item *ngFor="let i of containerTools" [ngxDraggable]="['builder-target']" [model]="i">
+              {{i.name}}
+            </li>
+          </ul>
+        </li>
+        <li nz-submenu>
+          <span title><i nz-icon type="shopping"></i><span class="nav-text">组件</span></span>
+          <ul [ngxDroppable]="['tools']" [copy]="true">
+            <li nz-menu-item *ngFor="let i of buildTools" [ngxDraggable]="['builder-target']" [model]="i">
+              {{i.caption}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-content>
+      <ngx-dnd-container
+        class="root-container"
+        [model]="targetBuilderTools"
+        dropZone="builder-target"
+        [removeOnSpill]="true">
+        <ng-template let-model="model" let-template="template">
+          <div [ngSwitch]="model.type">
+            <div *ngSwitchCase="-1">
+              <div class="shadow">
+                {{model.name}}
+                <ngx-dnd-container
+                  dropZone="builder-target"
+                  [model]="model.children"
+                  [removeOnSpill]="true"
+                  [template]="template">
+                </ngx-dnd-container>
+              </div>
+            </div>
+            <div *ngSwitchDefault>
+              <label>{{model.name}}</label>
+              <input [attr.type]="model.type" [ngModel]="model.data">
+            </div>
+          </div>
+        </ng-template>
+      </ngx-dnd-container>
+    </nz-content>
+    <nz-footer>
+      <pre><code>{{targetBuilderTools | json}}</code></pre>
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
+
+
+
