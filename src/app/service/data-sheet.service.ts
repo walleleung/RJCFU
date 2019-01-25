@@ -6,7 +6,7 @@ import {Subject} from 'rxjs';
 })
 export class DataSheetService {
 
-  private _designStatus = new Subject();
+  private _designStatus = new Subject<boolean>();
 
   designStatusChange$ = this._designStatus.asObservable();
 
@@ -14,6 +14,6 @@ export class DataSheetService {
   }
 
   exitDesignMode() {
-    this._designStatus.next();
+    this._designStatus.next(true);
   }
 }

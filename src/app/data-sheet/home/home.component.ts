@@ -23,11 +23,15 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.loadComponent(SheetDataComponent);
     this._dataSheetService.designStatusChange$.subscribe(p => {
-      this.loadComponent(SheetDataComponent);
+      if (p) {
+        this.isDesign = false;
+        this.loadComponent(SheetDataComponent);
+      }
     });
   }
 
   design() {
+    this.isDesign = true;
     this.loadComponent(SheetDesignComponent);
   }
 

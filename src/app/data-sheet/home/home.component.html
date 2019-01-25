@@ -1,12 +1,6 @@
 <nz-button-group>
-  <button nz-button (click)="design()">
+  <button nz-button (click)="design()" [disabled]="isDesign">
     <i nz-icon type="form"></i> 新增
-  </button>
-  <button nz-button>
-    <i nz-icon type="edit"></i> 编辑
-  </button>
-  <button nz-button>
-    <i nz-icon type="delete"></i> 删除
   </button>
 </nz-button-group>
 

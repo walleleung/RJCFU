@@ -1,0 +1,11 @@
+<nz-card [nzActions]="[edit]">
+  <nz-card-meta nzTitle="文本输入" nzDescription="简单的文本输入"></nz-card-meta>
+</nz-card>
+
+<ng-template #edit>
+  <i nz-icon type="edit" (click)="editTextInput()"></i>
+</ng-template>
+
+<nz-modal>
+  <p>edit text control</p>
+</nz-modal>

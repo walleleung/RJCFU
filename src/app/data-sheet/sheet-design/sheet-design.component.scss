@@ -6,22 +6,28 @@
   background-color: #f0f2f5;
 }
 
+.control-editor {
+  background-color: #f0f2f5;
+}
+
 .ngx-dnd-container {
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid red;
-  margin: 10px;
-  padding: 10px;
+  background-color: #f0f2f5 !important;
+  border: 1px solid #bbb !important;
+  border-radius: .2em;
+  margin: .8em !important;
+  padding: .5em !important;
 
   &.gu-empty {
-    border: 2px dotted red;
+    border: 1px dotted #bbb !important;
+    height: 3em !important;
   }
 
   &:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: #aaa;
   }
 
   .ex-moved {
-    background-color: #e74c3c;
+    background-color: #bbb;
   }
 
   .ex-over {
@@ -49,11 +55,12 @@
 
 
 .ngx-dnd-item {
-  margin: 10px;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.2);
+  margin: .8em;
+  padding: .5em;
+  background-color: #f0f2f5 !important;
+  border-radius: .2em;
   transition: opacity 0.4s ease-in-out;
-  border: 1px solid lightblue;
+  border: 1px solid lightblue !important;
   display: block;
 
   &:not(.has-handle):not(.move-disabled),
@@ -70,7 +77,7 @@
   }
 
   &:hover {
-    border: 1px solid blue;
+    border: 1px solid #fa8c16 !important;
   }
 }
 

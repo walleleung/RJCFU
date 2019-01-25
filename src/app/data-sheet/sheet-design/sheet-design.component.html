@@ -1,19 +1,26 @@
 <nz-button-group class="toolbar">
-  <button nz-button>
+  <button nz-button nz-tooltip nzTitle="保存" nzPlacement="bottom">
     <i nz-icon type="save"></i> 保存
   </button>
-  <button nz-button (click)="quitDesign()">
+  <button nz-button nz-tooltip nzTitle="预览" nzPlacement="bottom">
+    <i nz-icon type="robot"></i> 预览
+  </button>
+  <button nz-button nz-tooltip nzTitle="帮助" nzPlacement="bottom">
+    <i nz-icon type="question"></i> 帮助
+  </button>
+  <button nz-button (click)="quitDesign()" nz-tooltip nzTitle="退出" nzPlacement="bottom">
     <i nz-icon type="poweroff"></i> 退出
   </button>
 </nz-button-group>
 <nz-layout>
   <nz-layout>
     <nz-sider class="toolbox">
-      <ul nz-menu nzMode="inline">
-        <li nz-submenu>
-          <span title><i nz-icon type="shop"></i><span class="nav-text">容器</span></span>
+      <ul nz-menu nzMode="inline" [nzSelectable]="false">
+        <li nz-submenu [nzOpen]="true">
+          <span title><i nz-icon type="shop"></i><span class="nav-text">布局</span></span>
           <ul [ngxDroppable]="['tools']" [copy]="true">
-            <li nz-menu-item *ngFor="let i of containerTools" [ngxDraggable]="['builder-target']" [model]="i">
+            <li nz-menu-item *ngFor="let i of containerTools" [ngxDraggable]="['builder-target']" [model]="i" nz-tooltip
+                [nzTitle]="i.tooltip">
               {{i.name}}
             </li>
           </ul>
@@ -21,45 +28,67 @@
         <li nz-submenu>
           <span title><i nz-icon type="shopping"></i><span class="nav-text">组件</span></span>
           <ul [ngxDroppable]="['tools']" [copy]="true">
-            <li nz-menu-item *ngFor="let i of buildTools" [ngxDraggable]="['builder-target']" [model]="i">
-              {{i.caption}}
+            <li nz-menu-item *ngFor="let i of buildTools" [ngxDraggable]="['builder-target']" [model]="i" nz-tooltip
+                [nzTitle]="i.tooltip">
+              {{i.name}}
             </li>
           </ul>
         </li>
       </ul>
     </nz-sider>
-    <nz-content>
+    <nz-content (contextmenu)="contextMenu($event,contextMenuTemplate)">
       <ngx-dnd-container
-        class="root-container"
         [model]="targetBuilderTools"
         dropZone="builder-target"
         [removeOnSpill]="true">
         <ng-template let-model="model" let-template="template">
-          <div [ngSwitch]="model.type">
-            <div *ngSwitchCase="-1">
-              <div class="shadow">
-                {{model.name}}
-                <ngx-dnd-container
-                  dropZone="builder-target"
-                  [model]="model.children"
-                  [removeOnSpill]="true"
-                  [template]="template">
-                </ngx-dnd-container>
+          <ng-container [ngSwitch]="model.type">
+            <ng-container *ngSwitchCase="-1">
+              <div nz-row>
+                <div nz-col [nzSpan]="24/model.children.length" *ngFor="let i of model.children;">
+                  <ngx-dnd-container
+                    dropZone="builder-target"
+                    [model]="i"
+                    [removeOnSpill]="true"
+                    [template]="template">
+                  </ngx-dnd-container>
+                </div>
               </div>
-            </div>
-            <div *ngSwitchDefault>
-              <label>{{model.name}}</label>
-              <input [attr.type]="model.type" [ngModel]="model.data">
-            </div>
-          </div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="1">
+              <app-single-select></app-single-select>
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+              <app-multi-select></app-multi-select>
+            </ng-container>
+            <ng-container *ngSwitchCase="3">
+              <app-text-input></app-text-input>
+            </ng-container>
+            <ng-container *ngSwitchCase="4">
+              <app-table></app-table>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <i nz-icon type="exclamation"></i>
+            </ng-container>
+          </ng-container>
         </ng-template>
       </ngx-dnd-container>
     </nz-content>
+  </nz-layout>
+  <nz-layout>
     <nz-footer>
-      <pre><code>{{targetBuilderTools | json}}</code></pre>
+      <pre><code>{{targetBuilderTools|json}}</code></pre>
     </nz-footer>
   </nz-layout>
 </nz-layout>
 
+<ng-template #contextMenuTemplate>
+  <ul nz-menu nzInDropDown (nzClick)="contextMenuClick($event)">
+    <li nz-menu-item>
+      <i nz-icon type="save"></i> 保存
+    </li>
+  </ul>
+</ng-template>
 
 
