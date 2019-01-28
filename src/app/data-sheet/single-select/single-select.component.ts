@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {DesignComponentItem} from '../../model/design-component-item';
 
 @Component({
   selector: 'app-single-select',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./single-select.component.scss']
 })
 export class SingleSelectComponent implements OnInit {
+  @Output()
+  edit: EventEmitter<DesignComponentItem> = new EventEmitter();
 
-  constructor() { }
+  @Input()
+  model: DesignComponentItem;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  editComponent() {
+    this.edit.emit(this.model);
+  }
 }

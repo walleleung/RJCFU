@@ -1,3 +1,10 @@
-<p>
-  single-select works!
-</p>
+<nz-row>
+  <nz-col [nzSpan]="18">
+    <nz-select nzMode="default"></nz-select>
+  </nz-col>
+  <nz-col [nzSpan]="4">
+    <button nz-button (click)="editComponent()">
+      <i nz-icon type="setting"></i> 配置
+    </button>
+  </nz-col>
+</nz-row>

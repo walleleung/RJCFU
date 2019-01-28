@@ -1,3 +1,21 @@
-<p>
-  table works!
-</p>
+<nz-row>
+  <nz-col [nzSpan]="18">
+    <nz-table>
+      <thead>
+      <tr>
+        <th>#val1</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td></td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-col>
+  <nz-col [nzSpan]="4">
+    <button nz-button (click)="editTable()">
+      <i nz-icon type="setting"></i> 配置
+    </button>
+  </nz-col>
+</nz-row>

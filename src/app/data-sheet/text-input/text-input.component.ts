@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {DesignComponentItem} from '../../model/design-component-item';
 
 @Component({
   selector: 'app-text-input',
@@ -6,17 +7,22 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
   styleUrls: ['./text-input.component.scss']
 })
 export class TextInputComponent implements OnInit {
+  isEditing: boolean;
+
+  @Input()
+  model: DesignComponentItem;
 
   @Output()
-  onEdit: EventEmitter<any> = new EventEmitter();
+  edit: EventEmitter<DesignComponentItem> = new EventEmitter();
 
   constructor() {
+    this.isEditing = false;
   }
 
   ngOnInit() {
   }
 
   editTextInput() {
-    this.onEdit.emit();
+    this.edit.emit(this.model);
   }
 }

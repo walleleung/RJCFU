@@ -57,16 +57,16 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="1">
-              <app-single-select></app-single-select>
+              <app-single-select [model]="model" (edit)="editSingleSelect(model)"></app-single-select>
             </ng-container>
             <ng-container *ngSwitchCase="2">
-              <app-multi-select></app-multi-select>
+              <app-multi-select [model]="model" (edit)="editMultiSelect(model)"></app-multi-select>
             </ng-container>
             <ng-container *ngSwitchCase="3">
-              <app-text-input></app-text-input>
+              <app-text-input [model]="model" (edit)="editTextModel(model)"></app-text-input>
             </ng-container>
             <ng-container *ngSwitchCase="4">
-              <app-table></app-table>
+              <app-table [model]="model" (edit)="editTable(model)"></app-table>
             </ng-container>
             <ng-container *ngSwitchDefault>
               <i nz-icon type="exclamation"></i>
@@ -90,5 +90,3 @@
     </li>
   </ul>
 </ng-template>
-
-

@@ -1,9 +1,13 @@
-import {Component, OnInit, TemplateRef, ViewEncapsulation} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnInit, TemplateRef, Type, ViewEncapsulation} from '@angular/core';
 import {DataSheetService} from '../../service/data-sheet.service';
 import {DesignComponentContainer} from '../../model/design-component-container';
 import {DesignComponentType} from '../../model/design-component-type.enum';
 import {DesignComponentItem} from '../../model/design-component-item';
-import {NzDropdownContextComponent, NzDropdownService, NzMenuItemDirective} from 'ng-zorro-antd';
+import {NzDropdownContextComponent, NzDropdownService, NzMenuItemDirective, NzModalService} from 'ng-zorro-antd';
+import {TextInputSettingComponent} from '../text-input-setting/text-input-setting.component';
+import {SingleSelectSettingComponent} from '../single-select-setting/single-select-setting.component';
+import {MultiSelectSettingComponent} from '../multi-select-setting/multi-select-setting.component';
+import {TableSettingComponent} from '../table-setting/table-setting.component';
 
 @Component({
   selector: 'app-sheet-design',
@@ -29,7 +33,9 @@ export class SheetDesignComponent implements OnInit {
   private _dropdown: NzDropdownContextComponent;
 
   constructor(private _sheetService: DataSheetService,
-              private _nzDropdownService: NzDropdownService) {
+              private _nzDropdownService: NzDropdownService,
+              private _componentFactory: ComponentFactoryResolver,
+              private _modalService: NzModalService) {
   }
 
   ngOnInit() {
@@ -45,5 +51,41 @@ export class SheetDesignComponent implements OnInit {
 
   contextMenuClick($event: NzMenuItemDirective) {
     this._dropdown.close();
+  }
+
+  editTextModel(model: DesignComponentItem) {
+    this.showSettingDlg(TextInputSettingComponent, model);
+  }
+
+  editSingleSelect(model: DesignComponentItem) {
+    this.showSettingDlg(SingleSelectSettingComponent, model);
+  }
+
+  editMultiSelect(model: DesignComponentItem) {
+    this.showSettingDlg(MultiSelectSettingComponent, model);
+  }
+
+  editTable(model: DesignComponentItem) {
+    this.showSettingDlg(TableSettingComponent, model);
+  }
+
+  private showSettingDlg(settingComponent: Type<any>, model: DesignComponentItem) {
+    const settingModal = this._modalService.create({
+      nzTitle: '编辑文本',
+      nzContent: settingComponent,
+      nzComponentParams: {
+        model: model
+      },
+      nzOnOk: () => {
+        settingModal.close();
+      },
+      nzOnCancel: () => {
+        settingModal.close();
+      }
+    });
+
+    settingModal.afterClose.subscribe(() => {
+      settingModal.destroy();
+    });
   }
 }

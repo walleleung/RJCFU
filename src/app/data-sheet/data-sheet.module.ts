@@ -12,6 +12,10 @@ import {TextInputComponent} from './text-input/text-input.component';
 import {TableComponent} from './table/table.component';
 import {SingleSelectComponent} from './single-select/single-select.component';
 import {MultiSelectComponent} from './multi-select/multi-select.component';
+import {TextInputSettingComponent} from './text-input-setting/text-input-setting.component';
+import {SingleSelectSettingComponent} from './single-select-setting/single-select-setting.component';
+import {MultiSelectSettingComponent} from './multi-select-setting/multi-select-setting.component';
+import {TableSettingComponent} from './table-setting/table-setting.component';
 
 @NgModule({
   declarations: [HomeComponent,
@@ -21,7 +25,11 @@ import {MultiSelectComponent} from './multi-select/multi-select.component';
     TextInputComponent,
     TableComponent,
     SingleSelectComponent,
-    MultiSelectComponent
+    MultiSelectComponent,
+    TextInputSettingComponent,
+    SingleSelectSettingComponent,
+    MultiSelectSettingComponent,
+    TableSettingComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +43,11 @@ import {MultiSelectComponent} from './multi-select/multi-select.component';
   ],
   entryComponents: [
     SheetDataComponent,
-    SheetDesignComponent
+    SheetDesignComponent,
+    TextInputSettingComponent,
+    SingleSelectSettingComponent,
+    MultiSelectSettingComponent,
+    TableSettingComponent
   ]
 })
 export class DataSheetModule {
