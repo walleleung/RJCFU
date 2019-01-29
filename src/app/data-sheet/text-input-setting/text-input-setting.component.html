@@ -1,3 +1,38 @@
-<p>
-  text-input-setting works!
-</p>
+<form nz-form nzLayout="vertical" [formGroup]="textDesignForm">
+  <nz-form-item>
+    <nz-form-label>文本标签</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="label">
+      <nz-form-explain *ngIf="textDesignForm.get('label').dirty&&textDesignForm.get('label').errors">必须写标签
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>输入类型</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="type">
+        <nz-option *ngFor="let i of textType" [nzValue]="i" [nzLabel]="i"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>说明文字</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="hint">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>数据校验</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="validation">
+        <nz-option *ngFor="let i of validationType" [nzValue]="i" [nzLabel]="i"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>数据源</nz-form-label>
+    <nz-form-control>
+      <input formControlName="dataSource" nz-input placeholder="....">
+    </nz-form-control>
+  </nz-form-item>
+</form>

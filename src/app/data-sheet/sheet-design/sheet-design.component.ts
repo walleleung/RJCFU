@@ -8,6 +8,8 @@ import {TextInputSettingComponent} from '../text-input-setting/text-input-settin
 import {SingleSelectSettingComponent} from '../single-select-setting/single-select-setting.component';
 import {MultiSelectSettingComponent} from '../multi-select-setting/multi-select-setting.component';
 import {TableSettingComponent} from '../table-setting/table-setting.component';
+import {DesignComponentBase} from '../../model/design-component-base';
+import {PreviewDesignComponent} from '../preview-design/preview-design.component';
 
 @Component({
   selector: 'app-sheet-design',
@@ -69,6 +71,28 @@ export class SheetDesignComponent implements OnInit {
     this.showSettingDlg(TableSettingComponent, model);
   }
 
+  previewSheet() {
+    const modalRef = this._modalService.create({
+      nzTitle: '预览',
+      nzContent: PreviewDesignComponent,
+      nzComponentParams: {
+        model: this.targetBuilderTools
+      },
+      nzMaskClosable: false,
+      nzWidth: 800,
+      nzOnOk: () => {
+        modalRef.close();
+      },
+      nzOnCancel: () => {
+        modalRef.close();
+      }
+    });
+
+    modalRef.afterClose.subscribe(() => {
+      modalRef.destroy();
+    });
+  }
+
   private showSettingDlg(settingComponent: Type<any>, model: DesignComponentItem) {
     const settingModal = this._modalService.create({
       nzTitle: '编辑文本',
@@ -76,12 +100,15 @@ export class SheetDesignComponent implements OnInit {
       nzComponentParams: {
         model: model
       },
-      nzOnOk: () => {
-        settingModal.close();
-      },
-      nzOnCancel: () => {
-        settingModal.close();
-      }
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzOnOk: () => new Promise((resolve) => {
+          resolve((<DesignComponentBase>settingModal.getContentComponent()).save());
+        }
+      ),
+      nzOnCancel: () => new Promise((resolve) => {
+        resolve(true);
+      })
     });
 
     settingModal.afterClose.subscribe(() => {

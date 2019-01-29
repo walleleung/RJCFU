@@ -1,0 +1,81 @@
+<form nz-form [nzLayout]="formGroup.get('formLayout')?.value" [formGroup]="formGroup">
+  <nz-form-item>
+    <nz-form-label>布局</nz-form-label>
+    <nz-form-control>
+      <nz-radio-group formControlName="formLayout">
+        <label nz-radio-button [nzValue]="'horizontal'">水平</label>
+        <label nz-radio-button [nzValue]="'vertical'">垂直</label>
+        <label nz-radio-button [nzValue]="'inline'">内线</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <ng-container [ngTemplateOutlet]="previewForm"
+                [ngTemplateOutletContext]="{model:model}">
+  </ng-container>
+</form>
+
+<ng-template #previewForm let-dataSrc="model">
+  <ng-container *ngFor="let item of dataSrc">
+    <ng-container *ngIf="item" [ngSwitch]="item.type">
+      <ng-container *ngSwitchCase="-1">
+        <nz-row [nzGutter]="16">
+          <nz-col [nzSpan]="24/item.children.length" *ngFor="let i of item.children">
+            <ng-container [ngTemplateOutlet]="previewForm"
+                          [ngTemplateOutletContext]="{model:i}"></ng-container>
+          </nz-col>
+        </nz-row>
+      </ng-container>
+
+      <nz-form-item>
+        <ng-container *ngIf="item.implement">
+          <nz-form-label>
+            {{item.implement.label}}
+          </nz-form-label>
+
+          <ng-container *ngSwitchCase="1">
+            <nz-form-control>
+              <nz-select></nz-select>
+            </nz-form-control>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="2">
+            <nz-form-control>
+              <nz-select nzMode="multiple"></nz-select>
+            </nz-form-control>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="3">
+            <nz-form-control>
+              <ng-container [ngSwitch]="item.implement.type">
+                <ng-container *ngSwitchCase="'多行文字'">
+                  <textarea nz-input></textarea>
+                </ng-container>
+                <ng-container *ngSwitchCase="'数字'">
+                  <nz-input-number></nz-input-number>
+                </ng-container>
+                <ng-container *ngSwitchCase="'日期'">
+                  <nz-date-picker></nz-date-picker>
+                </ng-container>
+                <ng-container *ngSwitchCase="'日期范围'">
+                  <nz-range-picker></nz-range-picker>
+                </ng-container>
+                <ng-container *ngSwitchCase="'时间'">
+                  <nz-time-picker></nz-time-picker>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  <input nz-input [placeholder]="item.implement.hint">
+                </ng-container>
+              </ng-container>
+            </nz-form-control>
+          </ng-container>
+
+          <nz-form-control *ngSwitchCase="4">
+            <nz-table></nz-table>
+          </nz-form-control>
+        </ng-container>
+
+      </nz-form-item>
+    </ng-container>
+  </ng-container>
+</ng-template>

@@ -7,7 +7,7 @@ import {NgxDnDModule} from '@swimlane/ngx-dnd';
 import {SheetDataComponent} from './sheet-data/sheet-data.component';
 import {SheetDesignComponent} from './sheet-design/sheet-design.component';
 import {HostDirective} from './host.directive';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TextInputComponent} from './text-input/text-input.component';
 import {TableComponent} from './table/table.component';
 import {SingleSelectComponent} from './single-select/single-select.component';
@@ -16,6 +16,7 @@ import {TextInputSettingComponent} from './text-input-setting/text-input-setting
 import {SingleSelectSettingComponent} from './single-select-setting/single-select-setting.component';
 import {MultiSelectSettingComponent} from './multi-select-setting/multi-select-setting.component';
 import {TableSettingComponent} from './table-setting/table-setting.component';
+import {PreviewDesignComponent} from './preview-design/preview-design.component';
 
 @NgModule({
   declarations: [HomeComponent,
@@ -29,10 +30,12 @@ import {TableSettingComponent} from './table-setting/table-setting.component';
     TextInputSettingComponent,
     SingleSelectSettingComponent,
     MultiSelectSettingComponent,
-    TableSettingComponent
+    TableSettingComponent,
+    PreviewDesignComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     NgZorroAntdModule,
     NgxDnDModule,
     FormsModule,
@@ -47,7 +50,8 @@ import {TableSettingComponent} from './table-setting/table-setting.component';
     TextInputSettingComponent,
     SingleSelectSettingComponent,
     MultiSelectSettingComponent,
-    TableSettingComponent
+    TableSettingComponent,
+    PreviewDesignComponent
   ]
 })
 export class DataSheetModule {

@@ -1,9 +1,9 @@
 import {DesignComponentType} from './design-component-type.enum';
-import {DesignComponentItemData} from './design-component-item-data';
+import {DesignComponentItemBase} from './design-component-item-base';
 
 export interface DesignComponentItem {
   type: DesignComponentType;
   name: string;
   tooltip: string;
-  data?: DesignComponentItemData;
+  implement?: DesignComponentItemBase;
 }

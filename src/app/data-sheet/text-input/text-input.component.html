@@ -1,6 +1,6 @@
 <nz-row [nzGutter]="16">
-  <nz-col [nzSpan]="18">
-    <input nz-input placeholder="文本输入">
+  <nz-col [nzSpan]="20">
+    <input nz-input [placeholder]="(model&&model.implement)?(model.implement.label):'文本输入'">
   </nz-col>
   <nz-col [nzSpan]="4">
     <button nz-button (click)="editTextInput()">
